@@ -14,7 +14,8 @@ fn main() {
                 ..Default::default()
             }),
             ReceiverPlugin {
-                socket_address: String::from("127.0.0.1:35642"),
+                use_config_file: true,
+                ..Default::default()
             },
         ))
         .add_systems(Update, handle_messages)

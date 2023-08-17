@@ -1,4 +1,4 @@
-use std::net::SocketAddr;
+use std::{net::SocketAddr, time::SystemTime};
 
 use bevy::prelude::Event;
 
@@ -7,4 +7,5 @@ use bevy::prelude::Event;
 pub struct UdpPacketReceivedEvent {
     pub packet: Vec<u8>,
     pub sender_address: SocketAddr,
+    pub time_received: SystemTime,
 }

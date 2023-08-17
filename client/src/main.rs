@@ -4,6 +4,8 @@ use bevy::{
 };
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 
+pub mod udp_client;
+
 fn main() {
     App::new()
         .add_plugins((
