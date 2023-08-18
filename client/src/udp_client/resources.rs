@@ -1,4 +1,6 @@
-use std::net::UdpSocket;
+use std::{net::UdpSocket, error::Error};
+
+use super::errors::UdpClientError;
 
 pub struct UdpClientManager {
     socket: Option<UdpSocket>,
@@ -25,7 +27,18 @@ impl UdpClientManager {
         self.socket.as_mut()
     }
 
-    pub fn send_message(&self) -> Result<> {
+    /// Connects the udp socket to that server address
+    pub fn connect_to_server(&mut self, server_address: String) -> Result<(), Box<dyn Error>> {
+        self.socket?.connect(server_address)?;
+
+        Ok(())
+    }
+
+    /// Sends a messages to the connected server address
+    pub fn send_message(&self, buf: &[u8]) -> Result<(), Box<dyn Error>> {
+        self.socket?.send(buf);
+
+        Ok(())
     }
 
 }
