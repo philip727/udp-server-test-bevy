@@ -3,6 +3,7 @@ use bevy::{
     window::{PresentMode, WindowLevel},
 };
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use udp_client::UdpClientPlugin;
 
 pub mod udp_client;
 
@@ -12,9 +13,9 @@ fn main() {
             DefaultPlugins
                 .set(WindowPlugin {
                     primary_window: Some(Window {
-                        mode: bevy::window::WindowMode::Fullscreen,
+                        mode: bevy::window::WindowMode::Windowed,
                         title: "World Gen Game".to_string(),
-                        resizable: false,
+                        resizable: true,
                         present_mode: PresentMode::AutoVsync,
                         window_level: WindowLevel::Normal,
                         ..Default::default()
@@ -23,6 +24,7 @@ fn main() {
                 })
                 .set(ImagePlugin::default_nearest()),
             WorldInspectorPlugin::new(),
+            UdpClientPlugin,
         ))
         .run();
 }

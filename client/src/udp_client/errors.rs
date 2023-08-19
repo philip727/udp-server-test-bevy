@@ -1,5 +1,6 @@
 use std::{error::Error, fmt};
 
+#[derive(Debug)]
 pub struct UdpClientError {
     pub message: String
 }

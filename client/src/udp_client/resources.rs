@@ -1,7 +1,10 @@
-use std::{net::UdpSocket, error::Error};
+use std::{error::Error, net::UdpSocket};
+
+use bevy::prelude::*;
 
 use super::errors::UdpClientError;
 
+#[derive(Resource)]
 pub struct UdpClientManager {
     socket: Option<UdpSocket>,
 }
@@ -19,7 +22,7 @@ impl UdpClientManager {
         self
     }
 
-    pub fn socket(&self) -> Option<&UdpSocket> {
+    pub fn get_socket(&self) -> Option<&UdpSocket> {
         self.socket.as_ref()
     }
 
@@ -28,17 +31,31 @@ impl UdpClientManager {
     }
 
     /// Connects the udp socket to that server address
-    pub fn connect_to_server(&mut self, server_address: String) -> Result<(), Box<dyn Error>> {
-        self.socket?.connect(server_address)?;
+    pub fn connect_to_server(&mut self, server_address: String) -> Result<&mut Self, Box<dyn Error>> {
+        if let Some(socket) = &self.socket {
+            socket.connect(server_address)?;
 
-        Ok(())
+            return Ok(self);
+        }
+
+        Err(Box::new(UdpClientError {
+            message: String::from(format!(
+                "The client failed to connect to {}.",
+                server_address
+            )),
+        }))
     }
 
     /// Sends a messages to the connected server address
-    pub fn send_message(&self, buf: &[u8]) -> Result<(), Box<dyn Error>> {
-        self.socket?.send(buf);
+    pub fn send_message(&self, buf: &[u8]) -> Result<&Self, Box<dyn Error>> {
+        if let Some(socket) = &self.socket {
+            socket.send(buf)?;
 
-        Ok(())
+            return Ok(self);
+        }
+
+        Err(Box::new(UdpClientError {
+            message: String::from("Failed to send a network message."),
+        }))
     }
-
 }

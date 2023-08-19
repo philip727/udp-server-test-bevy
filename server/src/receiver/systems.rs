@@ -54,7 +54,7 @@ pub fn handle_packets(
 
                 // Write an event with the packet information
                 packet_received_event_writer.send(UdpPacketReceivedEvent {
-                    packet: packet.to_vec(),
+                    bytes: packet.to_vec(),
                     sender_address: sender_addrs,
                     time_received: current_time,
                 });
