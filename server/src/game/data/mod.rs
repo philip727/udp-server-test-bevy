@@ -98,7 +98,7 @@ impl ServerData {
     }
 
     pub fn new() -> ServerData {
-        let mut has_uuid = Self::check_for_uuid();
+        let mut has_uuid = Self::check_for_sid();
         if let None = has_uuid {
             has_uuid =
                 Some(Self::create_sid().expect("Failed to create sid, please try running again."));
