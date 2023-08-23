@@ -1,15 +1,19 @@
-use bevy::prelude::Plugin;
+use bevy::{prelude::PluginGroup, app::PluginGroupBuilder};
 
-use self::resources::ServerManager;
+use self::data::ServerDataPlugin;
 
 pub mod connection_manager;
 pub mod data;
 pub mod resources;
 
-pub struct ServerPlugin;
+pub struct ServerPlugins;
 
-impl Plugin for ServerPlugin {
-    fn build(&self, app: &mut bevy::prelude::App) {
-        app.init_resource::<ServerManager>();
+impl PluginGroup for ServerPlugins {
+    fn build(self) -> PluginGroupBuilder {
+        let mut group = PluginGroupBuilder::start::<Self>();
+
+        group = group.add(ServerDataPlugin);
+        
+        group
     }
 }
