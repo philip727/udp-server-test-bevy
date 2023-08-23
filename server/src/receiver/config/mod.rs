@@ -1,10 +1,12 @@
 pub mod errors;
+pub mod constants;
 
 use std::{error::Error, fs::File, io::Read};
 
 use serde::{Deserialize, Serialize};
 
-use self::errors::UdpReceiverConfigError;
+use self::{errors::UdpReceiverConfigError, constants::CONFIG_PATH};
+
 
 #[derive(Serialize, Deserialize, Clone, Copy)]
 pub struct UdpReceiverConfig {
@@ -19,9 +21,7 @@ impl UdpReceiverConfig {
 
     /// Loads the receiver config from a file located at ["config/server.properties"]
     pub fn from_file() -> Result<UdpReceiverConfig, Box<dyn Error>> {
-        let config_path = "config/server.properties";
-
-        let try_open_file = File::open(config_path);
+        let try_open_file = File::open(CONFIG_PATH);
 
         // Opens the receiver config file and reads the data
         if let Err(_) = try_open_file {

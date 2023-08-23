@@ -9,6 +9,6 @@ impl Error for UdpReceiverConfigError {}
 
 impl fmt::Display for UdpReceiverConfigError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{}", self.message)
+        write!(f, "UdpReceiverConfigError: {}", self.message)
     }
 }
