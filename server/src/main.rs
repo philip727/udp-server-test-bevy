@@ -2,7 +2,7 @@ pub mod game;
 pub mod receiver;
 
 use bevy::{prelude::*, window::ExitCondition};
-use game::{connection_manager::systems::handle_messages, ServerPlugins};
+use game::ServerPlugins;
 use receiver::ReceiverPlugin;
 
 fn main() {
@@ -19,6 +19,5 @@ fn main() {
             },
             ServerPlugins,
         ))
-        .add_systems(Update, handle_messages)
         .run();
 }

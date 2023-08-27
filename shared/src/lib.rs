@@ -1,17 +1,26 @@
-use serde::{Serialize, Deserialize};
+use std::str::Bytes;
+
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
-pub enum NetworkMessage {
-    JoinGame
+pub enum ClientToServerMessage {
+    JoinServer
 }
 
-impl NetworkMessage {
-    pub fn to_bytes(&self) -> Result<Vec<u8>, serde_json::Error> {
+#[derive(Serialize, Deserialize, Debug)]
+pub enum ServerToClientMessage {
+    SendSid(String),
+}
+
+impl MessageToBytes<'_> for ClientToServerMessage {}
+impl MessageToBytes<'_> for ServerToClientMessage {}
+
+pub trait MessageToBytes<'message>: Serialize + Sized + Deserialize<'message> {
+    fn to_bytes(&self) -> Result<Vec<u8>, serde_json::Error> {
         serde_json::to_vec(self)
     }
 
-    pub fn from_bytes(bytes: &[u8]) -> Result<Self, serde_json::Error> {
+    fn from_bytes(bytes: &'message [u8]) -> Result<Self, serde_json::Error> {
         serde_json::from_slice(bytes)
     }
 }
-

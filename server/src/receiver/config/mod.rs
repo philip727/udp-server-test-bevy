@@ -7,7 +7,6 @@ use serde::{Deserialize, Serialize};
 
 use self::{errors::UdpReceiverConfigError, constants::CONFIG_PATH};
 
-
 #[derive(Serialize, Deserialize, Clone, Copy)]
 pub struct UdpReceiverConfig {
     pub port: Option<u16>,

@@ -50,8 +50,8 @@ pub(super) fn check_for_sid() -> Option<Uuid> {
 
             let extension = is_extension.unwrap();
             if extension == SERVER_IDENTIFIER_EXTENSION {
+                // Returns the sid found
                 return Some(
-                    // Returns the sid found
                     Uuid::parse_str(
                         &file_path
                             .file_stem()

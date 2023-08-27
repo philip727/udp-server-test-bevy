@@ -2,10 +2,16 @@ use bevy::{
     prelude::*,
     window::{PresentMode, WindowLevel},
 };
+
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
+use game::camera::CameraPlugin;
+use main_menu::MainMenuPlugin;
 use udp_client::UdpClientPlugin;
 
 pub mod udp_client;
+pub mod main_menu;
+pub mod game;
+pub mod ui;
 
 fn main() {
     App::new()
@@ -24,7 +30,9 @@ fn main() {
                 })
                 .set(ImagePlugin::default_nearest()),
             WorldInspectorPlugin::new(),
+            CameraPlugin,
             UdpClientPlugin,
+            MainMenuPlugin,
         ))
         .run();
 }

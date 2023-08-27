@@ -14,6 +14,6 @@ pub fn load_sid(mut server_data_manager: ResMut<ServerDataManager>) {
             Some(create_sid().expect("Failed to create sid, please try running again."));
     }
 
-    info!("Found sid {}.", has_sid.unwrap());
-    server_data_manager.set_sid(has_sid.unwrap());
+    info!("Found server id {}.", has_sid.unwrap());
+    server_data_manager.set_server_id(has_sid.unwrap());
 }
