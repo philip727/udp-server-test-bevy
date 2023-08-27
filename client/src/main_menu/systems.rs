@@ -1,6 +1,8 @@
 use bevy::prelude::*;
 
-use crate::ui::interactable::button::helpers::create_button;
+use crate::ui::interactable::button::{
+    builder::ButtonBuilder, helpers::create_button, task::ButtonTask,
+};
 
 pub fn setup_main_menu(mut commands: Commands) {
     let mut root = commands.spawn(NodeBundle {
@@ -17,9 +19,33 @@ pub fn setup_main_menu(mut commands: Commands) {
     });
 
     root.with_children(|parent| {
-        create_button(parent, String::from("Singleplayer"));
-        create_button(parent, String::from("Multiplayer"));
-        create_button(parent, String::from("Settings"));
-        create_button(parent, String::from("Exit"));
+        create_button(
+            parent,
+            ButtonBuilder {
+                text: String::from("Singleplayer"),
+                task: ButtonTask::new(|| info!("Singleplayer clicked")),
+            },
+        );
+        create_button(
+            parent,
+            ButtonBuilder {
+                text: String::from("Multiplayer"),
+                task: ButtonTask::new(|| info!("Multiplayer clicked")),
+            },
+        );
+        create_button(
+            parent,
+            ButtonBuilder {
+                text: String::from("Settings"),
+                task: ButtonTask::new(|| info!("Settings clicked")),
+            },
+        );
+        create_button(
+            parent,
+            ButtonBuilder {
+                text: String::from("Exit"),
+                task: ButtonTask::new(|| info!("Exit clicked")),
+            },
+        );
     });
 }
