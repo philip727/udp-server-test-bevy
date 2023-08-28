@@ -2,7 +2,7 @@ use bevy::prelude::*;
 
 use super::builder::ButtonBuilder;
 
-pub fn create_button(parent: &mut ChildBuilder<'_, '_, '_>, builder: ButtonBuilder) -> Entity {
+pub fn create_button(parent: &mut ChildBuilder<'_, '_, '_>, component: impl Component, builder: ButtonBuilder) -> Entity {
     let mut button = parent.spawn((
         ButtonBundle {
             style: Style {
@@ -15,7 +15,7 @@ pub fn create_button(parent: &mut ChildBuilder<'_, '_, '_>, builder: ButtonBuild
             background_color: BackgroundColor(Color::rgb_u8(255, 255, 255)),
             ..Default::default()
         },
-        builder.task,
+        component
     ));
 
     button.with_children(|parent| {
