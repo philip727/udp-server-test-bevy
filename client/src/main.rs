@@ -1,3 +1,4 @@
+use belly::prelude::BellyPlugin;
 use bevy::{
     prelude::*,
     window::{PresentMode, WindowLevel},
@@ -5,14 +6,12 @@ use bevy::{
 
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use game::camera::CameraPlugin;
-use main_menu::MainMenuPlugin;
+use menu::MenuUIPlugins;
 use udp_client::UdpClientPlugin;
-use ui::UiPlugin;
 
-pub mod udp_client;
-pub mod main_menu;
 pub mod game;
-pub mod ui;
+pub mod menu;
+pub mod udp_client;
 
 fn main() {
     App::new()
@@ -30,11 +29,11 @@ fn main() {
                     ..Default::default()
                 })
                 .set(ImagePlugin::default_nearest()),
+            BellyPlugin,
             WorldInspectorPlugin::new(),
             CameraPlugin,
             UdpClientPlugin,
-            MainMenuPlugin,
-            UiPlugin,
+            MenuUIPlugins,
         ))
         .run();
 }
