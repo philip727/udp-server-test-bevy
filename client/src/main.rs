@@ -6,7 +6,7 @@ use bevy::{
 
 use bevy_framepace::{FramepacePlugin, FramepaceSettings, Limiter};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
-use game::camera::CameraPlugin;
+use game::{camera::CameraPlugin, connection::HandleConnectionPlugin};
 use menu::MenuUIPlugins;
 use udp_client::UdpClientPlugin;
 
@@ -36,6 +36,7 @@ fn main() {
             UdpClientPlugin,
             MenuUIPlugins,
             FramepacePlugin,
+            HandleConnectionPlugin,
         ))
         .add_systems(Startup, setup_app)
         .run();

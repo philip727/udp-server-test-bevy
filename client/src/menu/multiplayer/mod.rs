@@ -11,7 +11,7 @@ pub struct MultiplayerMenuPlugin;
 
 impl Plugin for MultiplayerMenuPlugin {
     fn build(&self, app: &mut bevy::prelude::App) {
-        app.add_systems(Startup, setup_multiplayer_menu)
-            .add_systems(Update, get_server_address);
+        app.add_systems(Startup, setup_multiplayer_menu);
+            //.add_systems(Update, get_server_address);
     }
 }
