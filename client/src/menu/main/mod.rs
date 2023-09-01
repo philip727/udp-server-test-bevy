@@ -3,6 +3,7 @@ use bevy::prelude::{Plugin, Startup};
 use self::systems::setup_main_menu;
 
 pub mod systems;
+pub mod helpers;
 
 pub struct MainMenuPlugin;
 

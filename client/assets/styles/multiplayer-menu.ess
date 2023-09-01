@@ -1,0 +1,5 @@
+#join-server-wrapper {
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}

@@ -9,6 +9,7 @@ shared = { path = "../shared" }
 bevy = "0.11"
 bevy_ecs_tilemap = "0.11.0"
 bevy_common_assets = { version = "0.6.0", features = ["json"] }
+bevy_framepace = "0.13.3"
 
 rand = "0.8.5"
 noise = "0.8.2"

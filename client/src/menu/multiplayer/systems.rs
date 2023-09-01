@@ -1,25 +1,25 @@
 use belly::prelude::*;
 use bevy::prelude::*;
 
-use crate::menu::main::systems::set_main_menu_visibility;
 
-use super::components::ServerJoinInput;
+use crate::menu::main::helpers::set_main_menu_visibility;
 
-// Set
-pub fn set_multiplayer_menu_visibility(ctx: &mut EventContext<impl Event>, visible: bool) {
-    if visible {
-        ctx.select("#multiplayer-menu").remove_class("hidden");
-        return;
-    }
-
-    ctx.select("#multiplayer-menu").add_class("hidden");
-}
+use super::{components::ServerJoinInput, helpers::set_multiplayer_menu_visibility};
 
 pub fn setup_multiplayer_menu(mut commands: Commands) {
     let server_join_input = commands.spawn(ServerJoinInput::default()).id();
+
+    commands.add(StyleSheet::load("styles/multiplayer-menu.ess"));
     commands.add(eml! {
         <body id="multiplayer-menu" class="hidden">
-            <textinput bind:value=to!(server_join_input, ServerJoinInput:server_address) />
+            <div id="join-server-wrapper">
+                <textinput bind:value=to!(server_join_input, ServerJoinInput:server_address) />
+                <button on:press=run!(for server_join_input |ctx, s: &ServerJoinInput| {
+                    info!("server: {:?}", s.server_address);
+                })>
+                    "Join"
+                </button>
+            </div>
             <button on:press=run!(|ctx| {
                 set_main_menu_visibility(ctx, true);
                 set_multiplayer_menu_visibility(ctx, false);

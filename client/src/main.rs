@@ -4,6 +4,7 @@ use bevy::{
     window::{PresentMode, WindowLevel},
 };
 
+use bevy_framepace::{FramepacePlugin, FramepaceSettings, Limiter};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use game::camera::CameraPlugin;
 use menu::MenuUIPlugins;
@@ -34,6 +35,12 @@ fn main() {
             CameraPlugin,
             UdpClientPlugin,
             MenuUIPlugins,
+            FramepacePlugin,
         ))
+        .add_systems(Startup, setup_app)
         .run();
+}
+
+fn setup_app(mut frame_settings: ResMut<FramepaceSettings>) {
+    frame_settings.limiter = Limiter::from_framerate(30.0);
 }

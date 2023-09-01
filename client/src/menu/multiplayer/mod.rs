@@ -5,6 +5,7 @@ use self::systems::{setup_multiplayer_menu, get_server_address};
 pub mod systems;
 pub mod components;
 pub mod resources;
+pub mod helpers;
 
 pub struct MultiplayerMenuPlugin;
 
