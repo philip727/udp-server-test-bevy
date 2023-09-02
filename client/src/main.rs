@@ -8,11 +8,13 @@ use bevy_framepace::{FramepacePlugin, FramepaceSettings, Limiter};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
 use game::{camera::CameraPlugin, connection::HandleConnectionPlugin};
 use menu::MenuUIPlugins;
+use states::AppState;
 use udp_client::UdpClientPlugin;
 
 pub mod game;
 pub mod menu;
 pub mod udp_client;
+pub mod states;
 
 fn main() {
     App::new()
@@ -38,6 +40,7 @@ fn main() {
             FramepacePlugin,
             HandleConnectionPlugin,
         ))
+        .add_state::<AppState>()
         .add_systems(Startup, setup_app)
         .run();
 }

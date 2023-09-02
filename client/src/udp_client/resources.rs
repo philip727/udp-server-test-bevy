@@ -30,6 +30,12 @@ impl UdpClientManager {
         self.socket.as_mut()
     }
 
+    pub fn clear_socket(&mut self) -> Result<&mut Self, Box<dyn Error>> {
+        self.socket = None;
+
+        Ok(self)
+    }
+
     /// Connects the udp socket to that server address
     pub fn connect_to_server(&mut self, server_address: String) -> Result<&mut Self, Box<dyn Error>> {
         if let Some(socket) = &self.socket {
