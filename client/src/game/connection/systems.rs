@@ -3,16 +3,18 @@ use std::net::UdpSocket;
 use bevy::prelude::*;
 use shared::{ClientToServerMessage, MessageToBytes};
 
-use crate::{states::AppState, udp_client::resources::UdpClientManager};
+use crate::{
+    states::AppState,
+    udp_client::resources::UdpClientManager,
+};
 
 use super::events::JoinServerEvent;
 
-pub fn handle_connection_on_join_server(
-    mut commands: Commands,
+pub fn handle_sending_join_server_message(
     mut join_server_event_reader: EventReader<JoinServerEvent>,
     mut udp_client_manager: ResMut<UdpClientManager>,
 ) {
-    for event in &mut join_server_event_reader {
+    for event in join_server_event_reader.iter() {
         let server_address = &*event.0;
 
         let client_socket = UdpSocket::bind("127.0.0.1:0");
@@ -43,7 +45,7 @@ pub fn handle_state_on_join_server(
     mut commands: Commands,
     mut join_server_event_reader: EventReader<JoinServerEvent>,
 ) {
-    for _ in &mut join_server_event_reader {
-        commands.insert_resource(NextState(Some(AppState::Game)));
+    for _ in join_server_event_reader.iter() {
+        commands.insert_resource(NextState(Some(AppState::Loading)));
     }
 }

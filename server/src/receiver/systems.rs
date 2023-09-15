@@ -7,7 +7,7 @@ use super::{
 };
 
 pub fn setup_udp_receiver(mut commands: Commands) {
-    commands.insert_resource(NextState(Some(UdpReceiverState::Binding)))
+    commands.insert_resource(NextState(Some(UdpReceiverState::Binding)));
 }
 
 /// Binds the udp socket for the UDP receiver manager
@@ -32,22 +32,13 @@ pub fn handle_packets(
     udp_receiver_manager: Res<UdpReceiverManager>,
     mut packet_received_event_writer: EventWriter<UdpPacketReceivedEvent>,
 ) {
-    let socket = udp_receiver_manager.socket();
+    let socket = udp_receiver_manager.get_socket();
 
     if let Some(socket) = socket {
-        let mut buffer = [0; PACKET_BUFFER_SIZE];
+        let mut buffer = [0u8; PACKET_BUFFER_SIZE];
 
         match socket.recv_from(&mut buffer) {
             Ok((size, sender_addrs)) => {
-                // Cancel the packet if it was too large
-                if size > PACKET_BUFFER_SIZE {
-                    info!(
-                        "Packet received but was too large [Size: {} | Max Size: {}]",
-                        size, PACKET_BUFFER_SIZE
-                    );
-                    return;
-                }
-
                 // Packet information
                 let packet = &buffer[..size];
                 let current_time = SystemTime::now();

@@ -16,7 +16,7 @@ pub fn handle_join_server_message(
     for client_message in message_from_client_event_reader.iter() {
         match client_message.message {
             ClientToServerMessage::JoinServer => {
-                if let Some(socket) = udp_receiver_manager.socket() {
+                if let Some(socket) = udp_receiver_manager.get_socket() {
                     let sid = server_data_manager.get_server_id().unwrap(); // Server id
                                                                             //
                     let message = ServerToClientMessage::SendSid(sid.to_string())
@@ -31,7 +31,6 @@ pub fn handle_join_server_message(
                     }
                 }
             }
-
             #[allow(unreachable_patterns)]
             _ => {}
         };

@@ -48,7 +48,7 @@ impl UdpReceiverManager {
     }
 
     // Gets the udp socket
-    pub fn socket(&self) -> Option<&UdpSocket> {
+    pub fn get_socket(&self) -> Option<&UdpSocket> {
         self.socket.as_ref()
     }
 

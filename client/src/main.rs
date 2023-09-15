@@ -6,7 +6,7 @@ use bevy::{
 
 use bevy_framepace::{FramepacePlugin, FramepaceSettings, Limiter};
 use bevy_inspector_egui::quick::WorldInspectorPlugin;
-use game::{camera::CameraPlugin, connection::HandleConnectionPlugin};
+use game::{camera::CameraPlugin, connection::HandleConnectionPlugin, GamePlugins};
 use menu::MenuUIPlugins;
 use states::AppState;
 use udp_client::UdpClientPlugin;
@@ -36,9 +36,9 @@ fn main() {
             WorldInspectorPlugin::new(),
             CameraPlugin,
             UdpClientPlugin,
-            MenuUIPlugins,
             FramepacePlugin,
-            HandleConnectionPlugin,
+            MenuUIPlugins,
+            GamePlugins,
         ))
         .add_state::<AppState>()
         .add_systems(Startup, setup_app)
@@ -46,5 +46,5 @@ fn main() {
 }
 
 fn setup_app(mut frame_settings: ResMut<FramepaceSettings>) {
-    frame_settings.limiter = Limiter::from_framerate(30.0);
+    frame_settings.limiter = Limiter::from_framerate(60.0);
 }

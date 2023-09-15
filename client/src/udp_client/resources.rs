@@ -17,6 +17,7 @@ impl Default for UdpClientManager {
 
 impl UdpClientManager {
     pub fn set_socket(&mut self, socket: UdpSocket) -> &mut Self {
+        socket.set_nonblocking(true).expect("Failed to set socket to non blocking");
         self.socket = Some(socket);
 
         self
