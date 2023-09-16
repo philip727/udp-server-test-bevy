@@ -5,6 +5,7 @@ use self::{connection::HandleConnectionPlugin, message_handler::MessageHandlerPl
 pub mod camera;
 pub mod connection;
 pub mod message_handler;
+pub mod worlds;
 
 pub struct GamePlugins;
 

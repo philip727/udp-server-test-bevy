@@ -1,20 +1,20 @@
 use std::{error::Error, fmt};
 
 #[derive(Debug)]
-pub struct ServerDataError {
+pub struct WorldStoreError {
     pub message: String,
 }
 
-impl ServerDataError {
+impl WorldStoreError {
     pub fn new(message: String) -> Box<Self> {
         Box::new(Self { message })
     }
 }
 
-impl Error for ServerDataError {}
+impl Error for WorldStoreError {}
 
-impl fmt::Display for ServerDataError {
+impl fmt::Display for WorldStoreError {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "ServerDataError: {}", self.message)
+        write!(f, "WorldStoreError: {}", self.message)
     }
 }

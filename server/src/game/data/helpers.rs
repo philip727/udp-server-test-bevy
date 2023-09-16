@@ -1,9 +1,12 @@
-use std::{fs, error::Error, io::Write};
+use std::{error::Error, fs, io::Write};
 
 use bevy::prelude::info;
 use uuid::Uuid;
 
-use super::{constants::{SERVER_DATA_DIR_PATH, SERVER_IDENTIFIER_EXTENSION}, errors::ServerDataError};
+use super::{
+    constants::{SERVER_DATA_DIR_PATH, SERVER_IDENTIFIER_EXTENSION},
+    errors::ServerDataError,
+};
 
 pub(super) fn check_for_data_folder() -> Result<(), Box<dyn Error>> {
     // Checks if the data directory exists
@@ -12,12 +15,10 @@ pub(super) fn check_for_data_folder() -> Result<(), Box<dyn Error>> {
     {
         // Creates the data directory since it doesnt exist
         if let Err(e) = fs::create_dir(SERVER_DATA_DIR_PATH) {
-            return Err(Box::new(ServerDataError {
-                message: format!(
-                    "Failed to create data directory \'{}\': {}",
-                    SERVER_DATA_DIR_PATH, e
-                ),
-            }));
+            return Err(ServerDataError::new(format!(
+                "Failed to create data directory \'{}\': {}",
+                SERVER_DATA_DIR_PATH, e
+            )));
         }
     }
 

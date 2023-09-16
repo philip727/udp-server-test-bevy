@@ -15,6 +15,7 @@ pub mod game;
 pub mod menu;
 pub mod udp_client;
 pub mod states;
+pub mod utils;
 
 fn main() {
     App::new()

@@ -1,10 +1,13 @@
 use bevy::prelude::*;
 
+use crate::states::AppState;
+
 use super::{
     constants::PACKET_BUFFER_SIZE, events::UdpPacketReceivedEvent, resources::UdpClientManager,
 };
 
 pub fn handle_packets(
+    mut commands: Commands,
     udp_client_manager: Res<UdpClientManager>,
     mut packet_received_event_writer: EventWriter<UdpPacketReceivedEvent>,
 ) {
@@ -25,6 +28,10 @@ pub fn handle_packets(
                 });
             }
             Err(ref e) if matches!(e.kind(), std::io::ErrorKind::WouldBlock) => {}
+            Err(ref e) if matches!(e.kind(), std::io::ErrorKind::ConnectionReset) => {
+                // Send prompt
+                commands.insert_resource(NextState(Some(AppState::Menu)))
+            }
             Err(e) => {
                 info!("Packet Receive Failed [{:?}]", e);
             }
