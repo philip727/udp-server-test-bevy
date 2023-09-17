@@ -7,36 +7,29 @@ use crate::game::message_handler::{
 
 use super::helpers::create_world_folder;
 
-pub fn handle_received_sid_message(
+// 
+pub fn handle_received_server_id_message(
     mut message_received_event_reader: EventReader<MessageReceivedFromServerEvent>,
 ) {
     for server_message in message_received_event_reader.iter() {
         match &server_message.message {
             ServerToClientMessage::SendSid(server_id) => {
-                let world_folder = get_world_folder(server_id.to_string());
+                let world_folder = get_world_folder(server_id);
                 if let Err(e) = world_folder {
                     // show prompt
                     return;
                 }
 
-                match world_folder.unwrap() {
-                    Some(file_path) => {
-                        info!("Found world folder for [{}]", server_id);
-                        // No account token then request
-
-                        // Send token to server
-                    }
-                    None => {
-                        info!("Creating world folder for [{}]", server_id);
-                        let world_folder = create_world_folder(server_id);
-                        if let Err(e) = world_folder {
-                            // show prompt
-                            return;
-                        }
-
-                        // Request for token
+                if let None = world_folder.unwrap() {
+                    info!("Creating world folder for [{}]", server_id);
+                    let world_folder = create_world_folder(server_id);
+                    if let Err(e) = world_folder {
+                        // show prompt
+                        return;
                     }
                 }
+
+                // Request event to get player token and data
             }
             _ => {}
         }

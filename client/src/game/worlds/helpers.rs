@@ -8,7 +8,7 @@ use crate::utils::check_for_dir_folder;
 use super::constants::WORLD_STORE_DIR_PATH;
 
 pub fn check_for_world_store_dir() -> Result<(), Box<dyn Error>> {
-    if let Err(e) = check_for_dir_folder(WORLD_STORE_DIR_PATH) {
+    if let Err(..) = check_for_dir_folder(WORLD_STORE_DIR_PATH) {
         create_world_store_directory()?;
     }
 
@@ -19,6 +19,10 @@ fn create_world_store_directory() -> Result<(), Box<dyn Error>> {
     fs::create_dir(WORLD_STORE_DIR_PATH)?;
 
     Ok(())
+}
+
+pub fn get_server_path(server_id: &str) -> PathBuf {
+    PathBuf::from(WORLD_STORE_DIR_PATH.to_string() + "/" + &server_id)
 }
 
 pub fn get_stored_worlds() -> Result<ReadDir, Box<dyn Error>> {

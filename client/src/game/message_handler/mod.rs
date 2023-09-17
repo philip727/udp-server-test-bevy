@@ -4,7 +4,7 @@ use crate::states::AppState;
 
 use self::{
     events::MessageReceivedFromServerEvent,
-    messages::join_server::systems::handle_received_sid_message,
+    messages::join_server::systems::handle_received_server_id_message,
     systems::handle_server_to_client_messages,
 };
 
@@ -21,7 +21,7 @@ impl Plugin for MessageHandlerPlugin {
                 Update,
                 (
                     handle_server_to_client_messages,
-                    handle_received_sid_message.run_if(in_state(AppState::Loading)),
+                    handle_received_server_id_message.run_if(in_state(AppState::Loading)),
                 ),
             );
     }
